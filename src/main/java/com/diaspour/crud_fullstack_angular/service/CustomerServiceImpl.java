@@ -1,6 +1,7 @@
 package com.diaspour.crud_fullstack_angular.service;
 
 import com.diaspour.crud_fullstack_angular.entity.Customer;
+import com.diaspour.crud_fullstack_angular.exception.ResourceNotFoundException;
 import com.diaspour.crud_fullstack_angular.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer findById(int id) {
-        return customerRepository.findById(id);
+        Customer customer = customerRepository.findById(id);
+        if(customer == null) {
+            throw new ResourceNotFoundException("Customer with id " + id + " not found");
+        }
+        return customer;
     }
 
     @Override
