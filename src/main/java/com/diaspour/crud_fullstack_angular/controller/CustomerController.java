@@ -2,10 +2,9 @@ package com.diaspour.crud_fullstack_angular.controller;
 
 import com.diaspour.crud_fullstack_angular.entity.Customer;
 import com.diaspour.crud_fullstack_angular.service.CustomerService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController()
 @RequestMapping("/api")
@@ -17,9 +16,30 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping("/save")
+    @PostMapping("/customers")
     public Customer save(@RequestBody Customer customer) {
         return customerService.save(customer);
     }
+
+    @GetMapping("/customers")
+    public List<Customer> findAll() {
+        return customerService.findAll();
+    }
+
+    @GetMapping("/customers/{id}")
+    public Customer findById(@PathVariable int id) {
+        return customerService.findById(id);
+    }
+
+    @DeleteMapping("/customers/{id}")
+    public void delete(@PathVariable int id) {
+        customerService.deleteById(id);
+    }
+
+    @PutMapping("/customers")
+    public Customer update(@RequestBody Customer customer) {
+        return customerService.update(customer);
+    }
+
 
 }
