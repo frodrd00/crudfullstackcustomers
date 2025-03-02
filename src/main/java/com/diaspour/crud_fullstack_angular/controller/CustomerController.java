@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -36,9 +37,9 @@ public class CustomerController {
         customerService.deleteById(id);
     }
 
-    @PutMapping("/customers")
-    public Customer update(@RequestBody Customer customer) {
-        return customerService.update(customer);
+    @PatchMapping("/customers/{id}")
+    public Customer update(@PathVariable int id, @RequestBody Customer customer) {
+        return customerService.update(id, customer);
     }
 
 

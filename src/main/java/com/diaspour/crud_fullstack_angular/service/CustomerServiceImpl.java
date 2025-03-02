@@ -41,7 +41,15 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer update(Customer customer) {
+    public Customer update(int id, Customer customer) {
+        Customer customerDetails = this.findById(id);
+        if(customer == null) {
+            throw new ResourceNotFoundException("Customer with id " + id + " not found");
+        }
+        // Actualizar solo los campos que se necesiten
+        if (customerDetails.getFirst_name() != null) customer.setFirst_name(customerDetails.getFirst_name());
+        if (customerDetails.getEmail() != null) customer.setEmail(customerDetails.getEmail());
+        if (customerDetails.getLast_name() != null) customer.setLast_name(customerDetails.getLast_name());
         return customerRepository.save(customer);
     }
 }
